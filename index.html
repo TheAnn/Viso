@@ -2,191 +2,124 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-			<title>D3 Page Template</title>
-			<script type="text/javascript" src="d3.js"></script>
-			<!--<link rel="stylesheet" href="style.css">-->
-			<style type="text/css">
-				/*style of class axis*/	
-				body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
-				.axis path,
-				.axis line {
-					fill: none;
-					stroke: violet;
-					shape-rendering: crispEdges;
-				}
-				.axis text {
-					font-family: sans-serif;
-					font-size: 10px;
-				}
-			</style>
+		<title>food story</title>
+		
+		<link rel="stylesheet" type="text/css" href="styles\style.css"/>
+		
+		 
+		
 	</head>
 	<body>
-		<!--
-			### CSV Script ###
-		-->
-		<script type="text/javascript" src="read-csv.js"></script>
+	<div id="phase1">
+	
+		<div class="header">		
+		 
+        <img src="images\header2.png" style= " width: 100%"  />
+        
+    	 </div> 
+		<div class="space"> </div>
+	
+		<div class="center">		
+		 
+        <img src="images\planting1.png" style= " width: 45%" id="image" onclick="changeImage()" />
+        <p class="text" id="text">  Thousands of days ago, and millions of heartbeats . . . <p>
+        
+    	</div>  
+    	 
+    </div>
+    
+    <div id="phase2" style="display:none">
+    
+    	<p class="textPhase2H" id="textPhase2Headline">  HEY! Welcome in the world of food. <p>
+    	<p class="textPhase2" id="textPhase2"> This is a t-SNE map made from dataset of 8642 food points including
+		all the food you might have ever encounter. The points are colored by their food group,
+		and distributed across this map by their nutritional similarities.  <p>
 		
-		<!--
-			### CSV File ###
-		-->
-		<fieldset id="load">
-			<form>
-				<label for="csvFileInput"> <strong>CSV File:</strong>
-				</label>
-				<button type="button" onclick="test('https://raw.githubusercontent.com/shourikan/Viso/master/packed.tsv')">Load</button>
+		
+		<button class="button" id="continue"> <img src="images\button.png" style= "width: 50px" /> </button>
+
+    </div>
+    
+    <div id="phase3" style="display:none">
+    	<p class="textPhase2H" id="textPhase2Headline">  How do <span style="color:red"> you </span> look at the food? <p>
+    	<p class="textPhase2 n" id="textPhase2"> Before starting, choose how do you want to filter in this world.. <p>
+    	<div class="allbuttons">
+			<form action="main.html" method="GET">
+				<button class="charbutton" value="1" name="choice" id="sustenance"> <img src="images\char-06.png" style= "width: 200px" /> </button>
+			
+				<button class="charbutton" value="2" name="choice" id="healing"> <img src="images\char-07.png" style= "width: 200px" /> </button>
+
+				<button class="charbutton" value="3" name="choice" id="tasteOfPleasure"> <img src="images\char-08.png" style= "width: 200px" /> </button>
+
+				<button class="charbutton" value="4" name="choice" id="all"> <img src="images\char-09.png" style= "width: 200px" /> </button>
 			</form>
-			<br>
-			<div id="output" style="max-height:50px;overflow-y:scroll;border:green solid 1px">
-			</div>
-		</fieldset>
-		<!--
-			### Chart div ###
-		
-		<div id="canvas" style="width: 800px; height:400px;"></div>-->
-		
-		<!--
-			### D3 Script ###
-		-->
-		<script type="text/javascript">
+		</div>
+		<div class="alltextboxes">
+			<p class="textBox"> <b>Animal surviving instinct</b> </br> -easily digestible </br>-nutritions per calories rich foods</br>
+-ready to eat pre-made products </br> </p>
+			<p class="textBox"> <b>Doctor’s picky approach</b> </br> -whole raw ingredients </br>-nutritions rich foods</br>
+-mostly low in calories </br>  </p>
+			<p class="textBox"> <b>Life of a hedonist</b> </br> -fast foods, sweets, snacks </br>-ready to eat premade
+products</br>  </p>
+			<p class="textBox textBoxlast"> <b>Unrestricted Foodie </b> </br> -meals that include all the food </br>  </p>
+		</div>
+    
+    </div>
+         
+   <script type="text/javascript">
+   
+        pos = 0;
+        link = [ "images/padastarseed.gif","images/nurish1.png", "images/starseed2.gif","images/intheworldfood.jpg","images/intheworldfood.jpg" ];
+        //texts=["a","h"];
+        texts =["A little star seed was born.","A kind caregiver took care of that little star, by nourishing its body. Starting with a sweet milk, the range of food was slowly expanded, with an aim to make it shine and grow healthily.","Soon that star grew old enough to choose on its own what she desire from the world of food. And especially, old enough to understand how to choose.", "This became unofficially her relationship with food. Huh, relationships are a big thing! How is that going to be?","eh" ];
+       
+        function changeImage(){
+        
+            document.getElementById("text").innerHTML="";
+            showText("text", texts[pos], 0, 50);  
+              
+            document.getElementById("image").src = link[pos];
+           pos++;
+            if (pos > 4) {
+           
+             document.getElementById('phase1').style.display='none' ;
+             document.getElementById('phase2').style.display='block' ;             
+             document.body.style.backgroundImage = 'url(images/allpoints.png)'; 
 
-		function swapPhase(p){
-			var d = document.getElementsByClassName("dot")[0];
-			var s = document.getElementsByClassName("shape")[0];
-			if(p==1){
-				d.setAttribute("display", "");
-				s.setAttribute("display", "none");
-				phase = 1;
-			} else if (p == 2){
-				d.setAttribute("display", "none");
-				s.setAttribute("display", "");
-				phase = 2;
+            };
+        };
+   
+  		 var showText = function (target, message, index, interval) {   
+   
+  				if (index < message.length) {
+   				document.getElementById(target).append(message[index++]);
+   				setTimeout(function () { showText(target, message, index, interval); }, interval);
+   				
+ 				 }
 			}
-		}
+		var action=1;
+ 		document.getElementById("continue").onclick=function() {
+ 		
+ 			if (action==3) {
+ 				document.getElementById('phase2').style.display='none' ;
+ 				document.getElementById('phase3').style.display='block' ;
+ 				}
+ 			
+ 			if (action==2) {
+ 		 		document.getElementById("textPhase2").innerHTML=document.getElementById("textPhase2").innerHTML + "<br/>"+"To raw frog legs.. ";
+ 				action ++;
+ 				}
+ 			if (action==1) {
+ 		 		document.getElementById("textPhase2").innerHTML=document.getElementById("textPhase2").innerHTML + "<br/>"+ "From chocolate pudding..";
+ 				action ++;
+ 				}
+ 				
+ 		}
+        
 
-		function drawChart(data){
-
-			//Turn off loading window
-			document.getElementById("load").style.display = "none";
-
-			//Width and height
-			var w = 1440;
-			var h = 960;
-			var size = 1;
-			var padding = 30;
-			phase = 1;
-
-			//Color palette
-			var colors = ["white", "#F19CA2", "#EDF8B1", "#CC4C02", "#7FCDBB", "#C7E9B4", 
-			"#FFFFD9", "#1D91C0", "#ED5276", "#00585E", "#253494", "#FBF484", "#FF5729", "#00BDAA", "white",
-			"#081D58", "#993404", "#FEC44F", "white", "#F4CDA5", "#9C4368", "#A5D3E6", "#009494", "#F8D7D0", "#004E2A"];
-
-			//Create SVG elements
-			var svg = d3.select("body")
-				.append("svg")
-					.attr("width", "100%")
-					.attr("height", "100%")
-				.append("g")
-					.call(d3.zoom().on("zoom", function () {
-					container.attr("transform", d3.event.transform);
-					var scale = container.attr("transform").match(/\((.*?)\)/g)[1];
-					scale = scale.substring(1, scale.length-1);
-					//console.log(scale);
-					if (parseInt(scale) < 20 && phase == 2)
-						swapPhase(1);
-					else if (parseInt(scale) >= 20 && phase == 1)
-						swapPhase(2);
-				}));
-
-			var rect = svg.append("rect")
-				.attr("width", w)
-				.attr("height", h)
-				.style("fill", "none")
-				.style("pointer-events", "all");
-
-			var container = svg.append("g");
-
-			if (data!=null){
-				var dataset = data;
-				
-				//Solution to negative values could be global shift of values by min value
-
-				var xScale = d3.scaleLinear()
-								.domain([d3.min(dataset, function(d) { return d[0]; }), d3.max(dataset, function(d) { return d[0]; })])
-								.range([padding, w-padding*2]);
-				var yScale = d3.scaleLinear()
-								.domain([d3.min(dataset, function(d) { return d[1]; }), d3.max(dataset, function(d) { return d[1]; })])
-								.range([h-padding, padding]);
-				/*var rScale = d3.scaleLinear()
-								.domain([d3.min(dataset, function(d) { return d[1]; }), d3.max(dataset, function(d) { return d[1]; })])
-								.range([size, size]);*/														
-				
-								
-				/*var xAxis = d3.axisBottom()
-							.scale(xScale)
-							.ticks(9);
-							
-				var yAxis = d3.axisLeft()
-							.scale(yScale)
-							.ticks(5);*/
-						
-				//Draw dots
-				dot = container.append("g")
-						.attr("class", "dot")
-						.attr("display", "")
-					.selectAll("circle")
-						.data(dataset)
-						.enter()
-					.append("circle")
-						.attr("cx",function(d) { return xScale(d[0]);})
-						.attr("cy",function(d) { return yScale(d[1]);})
-						.attr("r", 1)
-						.attr("fill", function(d) { return colors[d[3]]; })
-					.append("svg:title")
-						.text(function(d) { return d[2]; });
-						
-				//Draw shapes
-				shape = container.append("g")
-						.attr("class", "shape")
-						.attr("display", "none")
-					.selectAll("circle")
-						.data(dataset)
-						.enter()
-					.append("circle")
-						.attr("cx",function(d) { return xScale(d[0]);})
-						.attr("cy",function(d) { return yScale(d[1]);})
-						.attr("r", 1)
-						.attr("fill", "black");
-						
-					/* svg.selectAll("text")
-					.data(dataset)
-					.enter()
-					.append("text")
-					.text(function(d) {
-							return d[0] + "," + d[1];
-					})
-					.attr("x",function(d) {
-							return xScale(d[0]);
-					})
-					.attr("y",function(d) {
-							return yScale(d[1]);
-					})
-					.attr("font-family", "sans-serif")
-					.attr("font-size", "11px")
-					.attr("fill", "red"); */
-					
-									
-					/*svg.append("g")
-						.attr("class", "axis")
-						.attr("transform", "translate("+ (-size) +"," + (h - padding +size) + ")")
-						.call(xAxis);
-					
-					svg.append("g")
-						.attr("class", "axis")
-						.attr("transform", "translate("+ (padding-size) +","+ (size) +")")
-						.call(yAxis);*/
-			}
-		}
-
-		</script>
+   
+    </script>
+    
+		
 	</body>
 </html>
